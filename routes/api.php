@@ -22,3 +22,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::get("/service", [ServiceController::class, "getAll"]);
 Route::get("/service/{id}", [ServiceController::class, "getOne"]);
 Route::post("/service", [ServiceController::class, "store"]);
+Route::put("/service/{id}", [ServiceController::class, "update"]);
+Route::delete("/service/{id}", [ServiceController::class, "delete"]);

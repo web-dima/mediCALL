@@ -20,8 +20,8 @@ return new class extends Migration
             $table->string("name");
             $table->string("email");
             $table->string("password");
-            $table->enum("status", ["user", "admin"]);
-            $table->timestamps();
+            $table->enum("role", ["user", "admin"])->default("user");
+//            $table->timestamps();
         });
     }
 

@@ -20,9 +20,9 @@ return new class extends Migration
             $table->foreignId("user_id")->constrained("users")->cascadeOnDelete()->cascadeOnUpdate();
             $table->foreignId("service_id")->constrained("services")->cascadeOnDelete()->cascadeOnUpdate();
             $table->date("date");
-            $table->string("photo");
+//            $table->string("photo");
             $table->text("result");
-            $table->enum("status", ["активен", "приянт", "завершен", "отменен"]);
+            $table->enum("status", ["активен", "приянт", "завершен", "отменен"])->default("активен");
             $table->timestamps();
         });
     }

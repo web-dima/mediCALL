@@ -36,7 +36,7 @@ class ServiceService {
                 'after_GP' => filter_var($request["after_GP"], FILTER_VALIDATE_BOOLEAN),
                 'img' => "$path"
             ]);
-
+            var_dump($s);
             return response()->json([
                 'success' => true,
                 "data"=> $s
@@ -46,33 +46,6 @@ class ServiceService {
             return response()->json([
                 "success"=> false,
                 'data' => $e
-            ],500);
-        }
-    }
-
-    static function delete($id){
-        try {
-            $service = Services::find($id);
-            if (is_null($service)) {
-                return response()->json([
-                    "success"=> false,
-                    "data"=> "нет такого сервиса"
-                ]);
-            }
-
-            FileService::removeFile($service["img"]);
-
-            Services::destroy($id);
-            return response()->json([
-                "success"=> true,
-                "data"=> "серсис успешно удален"
-            ]);
-        } catch (\Exception $e) {
-
-            return response()->json([
-                "success"=> false,
-                'data' => "че то пошло не так, ларавел сволочь виноват однозначно",
-                "error" => $e
             ],500);
         }
     }
@@ -119,5 +92,32 @@ class ServiceService {
             ],500);
         }
 
+    }
+
+    static function delete($id){
+        try {
+            $service = Services::find($id);
+            if (is_null($service)) {
+                return response()->json([
+                    "success"=> false,
+                    "data"=> "нет такого сервиса"
+                ]);
+            }
+
+            FileService::removeFile($service["img"]);
+
+            Services::destroy($id);
+            return response()->json([
+                "success"=> true,
+                "data"=> "серсис успешно удален"
+            ]);
+        } catch (\Exception $e) {
+
+            return response()->json([
+                "success"=> false,
+                'data' => "че то пошло не так, ларавел сволочь виноват однозначно",
+                "error" => $e
+            ],500);
+        }
     }
 }

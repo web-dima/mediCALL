@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Services extends Model
 {
     use HasFactory;
+    public $timestamps = false;
     protected $table = 'services';
     protected $fillable = ["name","after_GP", "img"];
 }

@@ -2,13 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\ServiceStoreRequest;
-use App\Http\Requests\UpdateService;
-use App\Models\Services;
+use App\Http\Requests\ServiceCreateRequest;
+use App\Http\Requests\ServiceUpdateRequest;
 use App\Services\ServiceService;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Str;
 
 class ServiceController extends Controller
 {
@@ -18,19 +15,15 @@ class ServiceController extends Controller
     function getOne($id) {
         return ServiceService::getOne($id);
     }
-    function create(Request $request) {
+    function create(ServiceCreateRequest $request) {
         return ServiceService::create($request);
-    }
-
-    function store(ServiceStoreRequest $request) {
-        return ServiceService::store($request);
     }
 
     function delete($id) {
         return ServiceService::delete($id);
     }
 
-    function update(UpdateService $req, $id) {
+    function update(ServiceUpdateRequest $req, $id) {
         return ServiceService::update($req,$id);
     }
 

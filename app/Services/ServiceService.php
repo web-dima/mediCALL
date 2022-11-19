@@ -1,8 +1,8 @@
 <?php
 namespace App\Services;
 
-use App\Http\Requests\ServiceStoreRequest;
-use App\Http\Requests\UpdateService;
+use App\Http\Requests\ServiceCreateRequest;
+use App\Http\Requests\ServiceUpdateRequest;
 use App\Models\Services;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -12,7 +12,7 @@ class ServiceService {
         return Services::all();
     }
 
-    static function getOne(Request $req, $id) {
+    static function getOne($id) {
         $data = Services::find($id);
 
         if (is_null($data)) {
@@ -27,90 +27,97 @@ class ServiceService {
         ]);
     }
 
-    static function create(Request $request) {
-        if(!$request->hasFile('img')) {
-            return response()->json(['upload_file_not_found'], 400);
-        }
-        $file = $request->file('img');
-        if(!$file->isValid()) {
-            return response()->json(['invalid_file_upload'], 400);
-        }
-        $path = public_path() . '/uploads/img/service/';
-        $file->move($path, $file->getClientOriginalName());
-//        $request->validate([
-//            "name"=> "required",
-//            "after_GP"=> "required"
-//        ]);
-        $response = array('data' => '', 'success'=>false);
-        $validator = Validator::make($request->all(), [
-            "name"=> "required",
-            "after_GP"=> "required"
-        ]);
-
-        if ($validator->fails()) {
-            $response['data'] = $validator->messages();
-            return $response;
-        } else {
-            $request["after_GP"] = filter_var($request["after_GP"], FILTER_VALIDATE_BOOLEAN);
-//            $newService = new Services;
-            $newService =  Services::create([
-                "name" => $request["name"],
-                "after_GP" => $request["after_GP"],
-                "img" => $path,
-            ]);
-            return response()->json([
-                "success" => true,
-                "data" =>$newService
-            ]);
-//            return $newService;
-//            return $request->all();
-
-        }
-//        return response()->json(compact('path'));
-    }
-
-    static function store(ServiceStoreRequest $request){
+    static function create(ServiceCreateRequest $request){
         try {
-            $imageName = Str::random(32).".".$request->file("img")->getClientOriginalExtension();
+            $path = FileService::saveFile($request, "service");
 
-            // Create Service
             $s = Services::create([
                 'name' => $request["name"],
                 'after_GP' => filter_var($request["after_GP"], FILTER_VALIDATE_BOOLEAN),
-                'img' => $imageName
+                'img' => "$path"
             ]);
-            $path = public_path() . '/uploads/img/service/';
-            $file = $request->file("img");
-            $file->move($path, $imageName);
 
             return response()->json([
-                'status' => true,
+                'success' => true,
                 "data"=> $s
             ]);
         } catch (\Exception $e) {
 
             return response()->json([
-                "status"=> false,
-                'message' => "Something went really wrong!"
+                "success"=> false,
+                'data' => $e
             ],500);
         }
     }
 
     static function delete($id){
         try {
+            $service = Services::find($id);
+            if (is_null($service)) {
+                return response()->json([
+                    "success"=> false,
+                    "data"=> "нет такого сервиса"
+                ]);
+            }
 
+            FileService::removeFile($service["img"]);
+
+            Services::destroy($id);
+            return response()->json([
+                "success"=> true,
+                "data"=> "серсис успешно удален"
+            ]);
         } catch (\Exception $e) {
 
             return response()->json([
-                "status"=> false,
-                'message' => "че то пошло не так, ларавел сволочь виноват однозначно",
+                "success"=> false,
+                'data' => "че то пошло не так, ларавел сволочь виноват однозначно",
                 "error" => $e
             ],500);
         }
     }
 
-    static function update(UpdateService $req, $id) {
+    static function update(ServiceUpdateRequest $req, $id) {
+        try {
+            $service = Services::find($id);
+            if (is_null($service)) {
+                return response()->json([
+                    "success"=> false,
+                    "data"=> "нет такого сервиса"
+                ]);
+            }
+            $path = "";
+            if ($req->hasFile("img")) {
+                FileService::removeFile($service["img"]);
+                $path = FileService::saveFile($req, "service");
+            }
 
-        return [$req->all(), $id];
+            $updateFields = [
+                "name" => $req->input("name") ? $req->input("name") : $service["name"],
+                "after_GP" => $req->input("after_GP") ? filter_var($req->input("after_GP"), FILTER_VALIDATE_BOOLEAN) : $service["after_GP"],
+                "img" => $req->hasFile("img") ? $path : $service["img"],
+            ];
+
+            // если понадобиться вернуть обновленый объект
+            $updateService = tap($service)->update($updateFields);
+            return response()->json([
+                "success"=> true,
+                "data"=> $updateService
+            ]);
+
+//            return response()->json([
+//                "success"=> true,
+//                "data"=> $service->update($updateFields)
+//            ]);
+
+        } catch (\Exception $e) {
+
+            return response()->json([
+                "success"=> false,
+                'data' => "че то пошло не так, ларавел сволочь виноват однозначно",
+                "error" => $e
+            ],500);
+        }
+
     }
 }

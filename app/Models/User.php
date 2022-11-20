@@ -6,8 +6,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 use Tymon\JWTAuth\Contracts\JWTSubject;
-
-class User extends Model implements JWTSubject
+use Illuminate\Foundation\Auth\User as Authenticatable;
+class User extends Authenticatable implements JWTSubject
 {
     use HasFactory, Notifiable;
     protected $fillable = ["name", "email", "password", "role"];

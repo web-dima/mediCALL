@@ -4,15 +4,13 @@ namespace App\Services;
 use App\Http\Requests\ServiceCreateRequest;
 use App\Http\Requests\ServiceUpdateRequest;
 use App\Models\Services;
-use Illuminate\Http\Request;
-use Illuminate\Support\Str;
 
 class ServiceService {
-    static function getAll() {
+    function getAll() {
         return Services::all();
     }
 
-    static function getOne($id) {
+     function getOne($id) {
         $data = Services::find($id);
 
         if (is_null($data)) {
@@ -27,7 +25,7 @@ class ServiceService {
         ]);
     }
 
-    static function create(ServiceCreateRequest $request){
+     function create(ServiceCreateRequest $request){
         try {
             $path = FileService::saveFile($request, "service");
 
@@ -50,7 +48,7 @@ class ServiceService {
         }
     }
 
-    static function update(ServiceUpdateRequest $req, $id) {
+     function update(ServiceUpdateRequest $req, $id) {
         try {
             $service = Services::find($id);
             if (is_null($service)) {
@@ -94,7 +92,7 @@ class ServiceService {
 
     }
 
-    static function delete($id){
+     function delete($id){
         try {
             $service = Services::find($id);
             if (is_null($service)) {

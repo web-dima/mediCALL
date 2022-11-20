@@ -16,43 +16,49 @@ use App\Http\Controllers\AuthController;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+//группа роутов которые требуют авторизацию
+Route::group(['middleware' => 'api'], function () {
+
+    //роуты требующие авторизации
+    Route::group(['middleware' => ["check.auth"]], function () {
+        Route::controller(AuthController::class)->group(function () {
+            Route::post('/me', ['as' => 'me', 'uses' => 'me']);
+            Route::post('logout', 'logout');
+        });
+
+         Route::controller(UserController::class)->group(function () {
+            Route::get("/user", "getAll");
+            Route::get("/user/{id}", "getOne");
+            Route::post("/user", "create");
+            Route::post("/user/update/{id}", "update");
+            Route::delete("/user/{id}", "delete");
+        });
+
+        //роуты требующие роль админа
+        Route::group(['middleware' => ["check.admin"]], function () {
+            Route::controller(ServiceController::class)->group(function () {
+                Route::post("/service", "create");
+                Route::post("/service/update/{id}", "update"); //параша ебаная, ссаный апач не принимает картинки методом PUT, приходится костылить
+                Route::delete("/service/{id}", "delete");
+            });
+        });
+    });
 });
 
-Route::group([
+//роуты не требующие авторизации
+Route::group([], function (){
+    Route::controller(ServiceController::class)->group(function () {
+        Route::get("/service", "getAll");
+        Route::get("/service/{id}", "getOne");
+    });
 
-    'middleware' => 'api',
-    'prefix' => 'auth'
-
-], function () {
-
-    Route::post('login', 'AuthController@login');
-    Route::post('logout', 'AuthController@logout');
-    Route::post('refresh', 'AuthController@refresh');
-    Route::post('me', 'AuthController@me');
-
+    Route::controller(AuthController::class)->group(function () {
+        Route::post('/login/user', ['as' => 'login', 'uses' => 'login']);
+        Route::post("/register/user", "register");
+    });
 });
 
-Route::controller(ServiceController::class)->group(function () {
-    Route::get("/service", "getAll");
-    Route::get("/service/{id}", "getOne");
-    Route::post("/service", "create");
-    Route::post("/service/update/{id}", "update"); //параша ебаная, ссаный апач не принимает картинки методом PUT, приходится костылить
-    Route::delete("/service/{id}", "delete");
-});
 
-Route::controller(AuthController::class)->group(function () {
-    Route::post("/register/user", "register");
-    Route::post("/login/user", "login");
-});
 
-Route::controller(UserController::class)->group(function () {
-    Route::get("/user", "getAll");
-    Route::get("/user/{id}", "getOne");
-    Route::post("/user", "create");
-    Route::post("/user/update/{id}", "update");
-    Route::delete("/user/{id}", "delete");
-});
 
 

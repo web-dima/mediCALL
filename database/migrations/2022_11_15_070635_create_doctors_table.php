@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string("photo");
             $table->string("code");
             $table->string("password");
-            $table->timestamps();
+//            $table->timestamps();
         });
     }
 

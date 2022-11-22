@@ -5,6 +5,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AuthController;
+use \App\Http\Controllers\DoctorsController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -41,10 +42,23 @@ Route::group(['middleware' => 'api'], function () {
                 Route::post("/service/update/{id}", "update"); //параша ебаная, ссаный апач не принимает картинки методом PUT, приходится костылить
                 Route::delete("/service/{id}", "delete");
             });
+
+            Route::controller(DoctorsController::class)->group(function () {
+                Route::post("/doctors", "create");
+                Route::get("/doctors", "getAll");
+                Route::get("/doctors/{id}", "getOne");
+            });
         });
     });
 });
+Route::controller(DoctorsController::class)->group(function () {
+    Route::post("/doctors/update/{id}", "update");
+    Route::post("/doctors/me", "me");
+    Route::delete("/doctors/{id}", "delete");
+});
+Route::group(["middleware"=> "doctors"], function (){
 
+});
 //роуты не требующие авторизации
 Route::group([], function (){
     Route::controller(ServiceController::class)->group(function () {
@@ -55,6 +69,10 @@ Route::group([], function (){
     Route::controller(AuthController::class)->group(function () {
         Route::post('/login/user', ['as' => 'login', 'uses' => 'login']);
         Route::post("/register/user", "register");
+    });
+
+    Route::controller(DoctorsController::class)->group(function () {
+        Route::post('/login/doctors', ['as' => 'login', 'uses' => 'login']);
     });
 });
 

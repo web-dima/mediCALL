@@ -19,7 +19,7 @@ class JWTCheckAdminMiddleware
     {
         $user = $request["user"];
         if ($user["role"] !== "admin") {
-            return response()->json(['status' => "тут нет ничего, барбоса ставлю"], 403);
+            return response()->json(['status' => "тут нет ничего"], 403);
         } else {
             return $next(request());
         }

@@ -3,7 +3,7 @@ namespace App\Services;
 use Illuminate\Support\Str;
 
 class FileService {
-    static function saveFile($request, string $folder):string {
+    static function saveFile($request, $folder):string {
         $imageName = Str::random(32).".".$request->file("img")->getClientOriginalExtension();
         $path = public_path() . "/uploads/img/" . $folder . "/";
         $file = $request->file("img");

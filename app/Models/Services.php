@@ -11,4 +11,10 @@ class Services extends Model
     public $timestamps = false;
     protected $table = 'services';
     protected $fillable = ["name","after_GP", "img"];
+
+//    public function doctors()
+//    {
+//        return $this->belongsTo(Doctors::class);
+//    }
+
 }

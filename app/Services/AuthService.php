@@ -52,7 +52,7 @@ class AuthService
             return response()->json([
                 "success" => false,
                 "data" =>"неверный логин или пароль"
-            ]);
+            ], 525);
         }
 
 //        return response()->json([

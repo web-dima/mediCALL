@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\DoctorsUpdateRequest;
+use App\Http\Requests\LoginDoctorRequest;
 use App\Services\DoctorsService;
 use Illuminate\Http\Request;
+use App\Http\Requests\DoctorCreateRequest;
 
 class DoctorsController extends Controller
 {
@@ -12,31 +15,31 @@ class DoctorsController extends Controller
 //        $this->middleware('auth:api', ['except' => []]);
     }
 
-    function create(Request $request) {
+    function create(DoctorCreateRequest $request) {
         return $this->DoctorsService->create($request);
     }
 
     function getAll() {
-        return $this->DoctorsService->getAll($request);
+        return $this->DoctorsService->getAll();
     }
 
-    function getOne() {
-        return $this->DoctorsService->getOne($request);
+    function getOne($id) {
+        return $this->DoctorsService->getOne($id);
     }
-
-    function login() {
-        return $this->DoctorsService->login();
+    function login(LoginDoctorRequest $request) {
+        return $this->DoctorsService->login($request);
     }
 
     function me() {
         return $this->DoctorsService->me();
     }
 
-    function delete() {
-        return $this->DoctorsService->delete($request);
+    function delete($id) {
+        return $this->DoctorsService->delete($id);
     }
 
-    function update() {
-        return $this->DoctorsService->update($request);
+    function update(DoctorsUpdateRequest $request, $id) {
+        echo "sdas";
+        return $this->DoctorsService->update($request, $id);
     }
 }

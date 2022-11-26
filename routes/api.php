@@ -34,6 +34,9 @@ Route::group(['middleware' => 'api'], function () {
             Route::post("/user/update/{id}", "update");
             Route::delete("/user/{id}", "delete");
         });
+        Route::controller(DoctorsController::class)->group(function () {
+            Route::post("/doctors/me", "me");
+        });
 
         //роуты требующие роль админа
         Route::group(['middleware' => ["check.admin"]], function () {
@@ -44,21 +47,15 @@ Route::group(['middleware' => 'api'], function () {
             });
 
             Route::controller(DoctorsController::class)->group(function () {
+
                 Route::post("/doctors", "create");
-                Route::get("/doctors", "getAll");
-                Route::get("/doctors/{id}", "getOne");
+                Route::post("/doctors/update/{id}", "update");
+                Route::delete("/doctors/{id}", "delete");
             });
         });
     });
 });
-Route::controller(DoctorsController::class)->group(function () {
-    Route::post("/doctors/update/{id}", "update");
-    Route::post("/doctors/me", "me");
-    Route::delete("/doctors/{id}", "delete");
-});
-Route::group(["middleware"=> "doctors"], function (){
 
-});
 //роуты не требующие авторизации
 Route::group([], function (){
     Route::controller(ServiceController::class)->group(function () {
@@ -73,6 +70,8 @@ Route::group([], function (){
 
     Route::controller(DoctorsController::class)->group(function () {
         Route::post('/login/doctors', ['as' => 'login', 'uses' => 'login']);
+
+        Route::get("/doctors/{id}", "getOne");
     });
 });
 

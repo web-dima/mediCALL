@@ -2,13 +2,12 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
-class ServiceCreateRequest extends FormRequest
+class LoginDoctorRequest extends FormRequest
 {
-
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -27,9 +26,8 @@ class ServiceCreateRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|unique:services|string|max:258',
-            'after_GP' => 'required|string',
-            'img' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
+            'code' => 'required|string',
+            'password' => 'required|string',
         ];
     }
     protected function failedValidation(Validator $validator)

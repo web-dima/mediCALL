@@ -2,34 +2,66 @@
 
 namespace App\Services;
 
+use App\Http\Requests\DoctorsUpdateRequest;
+use App\Http\Requests\LoginDoctorRequest;
 use App\Models\Doctors;
 use App\Models\Services;
+use App\Http\Requests\DoctorCreateRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use PhpParser\Comment\Doc;
 
 class DoctorsService
 {
-    function login() {
+    function login(LoginDoctorRequest $request) {
+        $credentials = $request->only(['code', 'password']);
+        if (!$token = auth()->guard("doctors")->attempt($credentials)) {
+            return response()->json([
+                "success" => false,
+                "data" =>"неверный логин или пароль"
+            ], 525);
+        }
+        $doctor = Auth::guard("doctors")->user();
+        $popi = DB::table("services")->where('id', '=', $doctor["service_id"])->get();
+        $doctor["service"] = $popi;
+        return response()->json([
+            "success" => true,
+            "data" =>[
+                "user" => $doctor,
+                "token"=> [
+                    'access_token' => $token,
+                    'token_type' => 'bearer',
+                    'expires_in' => auth()->factory()->getTTL() * 60
+                ]
+            ]
+        ]);
+    }
+
+    function me() {
+        return Auth::guard("doctors")->user();
+    }
+
+    function create(DoctorCreateRequest $request) {
         try {
+            $path = FileService::saveFile($request, "doctors");
+            $service = Services::find(intval($request->input("service_id")));
+            if (is_null($service)) {
+                return response()->json([
+                    "success" => false,
+                    "data" =>"такого сервиса не существует"
+                ]);
+            }
+            $idService =  $service["id"];
             $doctor = Doctors::create([
-                "fio"=> "godo",
-                "photo" => "string",
-                "code" => "123",
-                "password" => Hash::make("123"),
+                "service_id" => $idService ,
+                "fio"=> $request->input("fio"),
+                "photo" => $path,
+                "code" => $request->input("code"),
+                "password" => Hash::make($request->input("password")),
             ]);
-//            if (!$token = auth()->attempt([
-//                "email"=> $request->input("email"),
-//                "password"=> $request->input("password"),
-//            ])) {
-//                return response()->json([
-//                    "success" => false,
-//                    "data" =>"неверный логин или пароль"
-//                ]);
-//            }
             $token = Auth::guard("doctors")->login($doctor);
-            echo $token;
             return response()->json([
                 "success" => true,
                 "data" =>[
@@ -37,7 +69,7 @@ class DoctorsService
                     "token"=> [
                         'access_token' => $token,
                         'token_type' => 'bearer',
-                        'expires_in' => auth()->factory()->getTTL() * 60
+                        'expires_in' => auth()->guard("doctors")->factory()->getTTL() * 60
                     ]
                 ]
             ]);
@@ -49,23 +81,75 @@ class DoctorsService
         }
     }
 
-    function me() {
-        return Auth::guard("doctors")->user();
+    function update(DoctorsUpdateRequest $req, $id) {
+        try {
+            $doctor = Doctors::find($id);
+            if (is_null($doctor)) {
+                return response()->json([
+                    "success"=> false,
+                    "data"=> "нет такого доктора"
+                ]);
+            }
+            $path = "";
+            if ($req->hasFile("img")) {
+                FileService::removeFile($doctor["photo"]);
+                $path = FileService::saveFile($req, "service");
+            }
+
+            $updateFields = [
+                "fio" => $req->input("fio") ? $req->input("fio") : $doctor["fio"],
+                "photo" => $req->hasFile("img") ? $path : $doctor["photo"],
+            ];
+
+            // если понадобиться вернуть обновленый объект
+            $updateDoctor = tap($doctor)->update($updateFields);
+            return response()->json([
+                "success"=> true,
+                "data"=> $updateDoctor
+            ]);
+
+        } catch (\Exception $e) {
+
+            return response()->json([
+                "success"=> false,
+                'data' => "че то пошло не так, ларавел сволочь виноват однозначно",
+                "error" => $e
+            ],525);
+        }
     }
 
-    function create(Request $request) {
-        return "some";
+    function delete($id) {
+        try {
+            $doctor = Doctors::find($id);
+            if (is_null($doctor)) {
+                return response()->json([
+                    "success"=> false,
+                    "data"=> "нет такого доктора"
+                ]);
+            }
+
+            FileService::removeFile($doctor["photo"]);
+
+            Doctors::destroy($id);
+            return response()->json([
+                "success"=> true,
+                "data"=> "доктор успешно удален"
+            ]);
+        } catch (\Exception $e) {
+
+            return response()->json([
+                "success"=> false,
+                'data' => "че то пошло не так, ларавел сволочь виноват однозначно",
+                "error" => $e
+            ],500);
+        }
     }
 
-    function update(Request $request) {
+    function getAll() {
+        return Doctors::with("Services")->get();
     }
 
-    function delete(Request $request) {
-    }
-
-    function getAll(Request $request) {
-    }
-
-    function getOne(Request $request) {
+    function getOne($id) {
+        return Doctors::with("services")->find($id);
     }
 }

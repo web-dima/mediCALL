@@ -3,6 +3,7 @@ namespace App\Services;
 
 use App\Http\Requests\ServiceCreateRequest;
 use App\Http\Requests\ServiceUpdateRequest;
+use App\Models\Doctors;
 use App\Models\Services;
 
 class ServiceService {
@@ -22,6 +23,20 @@ class ServiceService {
         return response()->json([
             "success" => true,
             "data" =>$data
+        ]);
+    }
+
+    function getDoctorByService ($id) {
+        $doc = Doctors::with("services")->where("service_id", "=", $id)->get();
+        if (!count($doc)) {
+            return response()->json([
+                "success"=> false,
+                "data"=> "нет такого доктора"
+            ]);
+        }
+        return response()->json([
+            'success' => true,
+            "data"=> $doc
         ]);
     }
 

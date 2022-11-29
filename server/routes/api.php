@@ -71,6 +71,7 @@ Route::group(['middleware' => 'api'], function () {
 Route::group([], function (){
     Route::controller(ServiceController::class)->group(function () {
         Route::get("/service", "getAll");
+        Route::get("/service/{id}/doctor", "getDoctorByService");
         Route::get("/service/{id}", "getOne");
     });
 

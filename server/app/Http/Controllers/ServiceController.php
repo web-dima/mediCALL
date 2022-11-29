@@ -22,6 +22,9 @@ class ServiceController extends Controller
     function getOne($id) {
         return $this->ServiceService->getOne($id);
     }
+    function getDoctorByService ($id) {
+        return $this->ServiceService->getDoctorByService($id);
+    }
     function create(ServiceCreateRequest $request) {
         return $this->ServiceService->create($request);
     }

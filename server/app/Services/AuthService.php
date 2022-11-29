@@ -17,15 +17,6 @@ class AuthService
                 "email" => $request->input("email"),
                 "password" => Hash::make($request->input("password")),
             ]);
-//            if (!$token = auth()->attempt([
-//                "email"=> $request->input("email"),
-//                "password"=> $request->input("password"),
-//            ])) {
-//                return response()->json([
-//                    "success" => false,
-//                    "data" =>"неверный логин или пароль"
-//                ]);
-//            }
             $token = Auth::login($user);
             return response()->json([
                 "success" => true,

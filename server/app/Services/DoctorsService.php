@@ -146,7 +146,7 @@ class DoctorsService
     }
 
     function getAll() {
-        return Doctors::with("Services")->get();
+        return Doctors::with("services")->get();
     }
 
     function getOne($id) {

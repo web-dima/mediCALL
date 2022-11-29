@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AuthController;
 use \App\Http\Controllers\DoctorsController;
+use \App\Http\Controllers\ReceptionsController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -37,7 +38,17 @@ Route::group(['middleware' => 'api'], function () {
         Route::controller(DoctorsController::class)->group(function () {
             Route::post("/doctors/me", "me");
         });
-
+        Route::controller(ReceptionsController::class)->group(function () {
+            Route::get("/receptions", "getAll");
+            Route::get("/receptions/user", "getAllForUser");
+            Route::get("/receptions/{id}", "getOne");
+            Route::post("/receptions", "create");
+            Route::delete("/receptions/{id}", "delete");
+            Route::patch("/receptions/status", "changeStatus");
+            Route::post("/receptions/complete", "complete");
+            Route::patch("/receptions/accept/{id}", "accept");
+            Route::patch("/receptions/cancel/{id}", "cancel");
+        });
         //роуты требующие роль админа
         Route::group(['middleware' => ["check.admin"]], function () {
             Route::controller(ServiceController::class)->group(function () {
@@ -70,7 +81,7 @@ Route::group([], function (){
 
     Route::controller(DoctorsController::class)->group(function () {
         Route::post('/login/doctors', ['as' => 'login', 'uses' => 'login']);
-
+        Route::get("/doctors", "getAll");
         Route::get("/doctors/{id}", "getOne");
     });
 });

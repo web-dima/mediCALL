@@ -20,27 +20,27 @@ class ServiceSeeder extends Seeder
                 [
                     "name" => "Терапевт",
                     "after_GP" => false,
-                    "img" => "public\uploads\img\service\GP.jph",
+                    "img" => "public\uploads\img\service\GP.jpg",
                 ],
                 [
                     "name" => "Уролог",
                     "after_GP" => true,
-                    "img" => "public\uploads\img\service\ur.jph",
+                    "img" => "public\uploads\img\service\ur.jpg",
                 ],
                 [
                     "name" => "Нарколог",
                     "after_GP" => true,
-                    "img" => "public\uploads\img\service\drugs.jph",
+                    "img" => "public\uploads\img\service\drugs.jpg",
                 ],
                 [
                     "name" => "Невролог",
                     "after_GP" => true,
-                    "img" => "public\uploads\img\service\\nevrol.jph",
+                    "img" => "public\uploads\img\service\\nevrol.jpg",
                 ],
                 [
                     "name" => "Психолог",
                     "after_GP" => true,
-                    "img" => "public\uploads\img\service\shiz.jph",
+                    "img" => "public\uploads\img\service\shiz.jpg",
                 ],
             ],
         );

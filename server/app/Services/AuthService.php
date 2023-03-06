@@ -28,7 +28,7 @@ class AuthService
                         'expires_in' => auth()->factory()->getTTL() * 60
                     ]
                 ]
-            ]);
+            ],201);
         }catch (\Exception $e) {
             return response()->json([
                 "success" => false,
@@ -43,7 +43,7 @@ class AuthService
             return response()->json([
                 "success" => false,
                 "data" =>"неверный логин или пароль"
-            ], 525);
+            ]);
         }
 
 //        return response()->json([
@@ -73,6 +73,6 @@ class AuthService
     {
         auth()->logout();
 
-        return response()->json(['message' => 'Successfully logged out']);
+        return response()->json(['message' => 'Successfully logged out'],200);
     }
 }

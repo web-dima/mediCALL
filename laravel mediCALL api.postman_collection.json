@@ -1,0 +1,868 @@
+{
+	"info": {
+		"_postman_id": "b5adb411-7d3d-443e-84fa-a8a0bc923b42",
+		"name": "laravel mediCALL api",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "19770162"
+	},
+	"item": [
+		{
+			"name": "services",
+			"item": [
+				{
+					"name": "getAll Services",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/service",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"service"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getOne Service",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/service/1",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"service",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create Service",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvYXBpL2xvZ2luL3VzZXIiLCJpYXQiOjE2Njg5NTg5NzUsImV4cCI6MTY2OTA0NTM3NSwibmJmIjoxNjY4OTU4OTc1LCJqdGkiOiJqSlBDMG1MdGRsN1NXdmFPIiwic3ViIjoiMiIsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.a_-M0wl8aJtKPxdxdgyx6d6Orol7pn2Rcx7VG3k6dU8",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "шинхогодно3",
+									"type": "text"
+								},
+								{
+									"key": "after_GP",
+									"value": "true",
+									"type": "text"
+								},
+								{
+									"key": "img",
+									"type": "file",
+									"src": "/C:/Users/Дима.DESKTOP-R642L0F/Desktop/allah.png"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{host}}/service",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"service"
+							],
+							"query": [
+								{
+									"key": "Accept",
+									"value": "application/json",
+									"disabled": true
+								},
+								{
+									"key": "Content-type",
+									"value": "application/json",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update Service",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "123111",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "after_GP",
+									"value": "true",
+									"type": "text"
+								},
+								{
+									"key": "img",
+									"type": "file",
+									"src": "/C:/Users/Дима.DESKTOP-R642L0F/Desktop/allah.png",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "{{host}}/service/update/1",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"service",
+								"update",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete Service",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/service/13",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"service",
+								"13"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "register user",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"второй\",\r\n    \"email\": \"a@b.cd\",\r\n    \"password\": \"123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/register/user",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"register",
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "login user",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\":\"a@b.c\",\r\n    \"password\":\"123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/login/user",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"login",
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "me",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvYXBpL2xvZ2luL2RvY3RvcnMiLCJpYXQiOjE2Njk1NTc3NzEsImV4cCI6MTY2OTY0NDE3MSwibmJmIjoxNjY5NTU3NzcxLCJqdGkiOiJENnBNUWxqOFdSOGg3ZzZmIiwic3ViIjoiMiIsInBydiI6IjdmNzA2MmMzZDlkOTdhMjg3YjZkY2Y2NTkzNWFkNmRkZjJhNzI0N2YifQ.LEYwvhYFDKbCJ-hlhdb3MGyzu9gCTpNnxgcYBkNUe2M",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/me",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"me"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "logout",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvYXBpL2xvZ2luL3VzZXIiLCJpYXQiOjE2Njg5NTg5NzUsImV4cCI6MTY2OTA0NTM3NSwibmJmIjoxNjY4OTU4OTc1LCJqdGkiOiJqSlBDMG1MdGRsN1NXdmFPIiwic3ViIjoiMiIsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.a_-M0wl8aJtKPxdxdgyx6d6Orol7pn2Rcx7VG3k6dU8",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/logout",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"logout"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "doctors",
+			"item": [
+				{
+					"name": "getAll doctors",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvYXBpL2xvZ2luL3VzZXIiLCJpYXQiOjE2Njk0NDk0MzYsImV4cCI6MTY2OTUzNTgzNiwibmJmIjoxNjY5NDQ5NDM2LCJqdGkiOiJ1M3NsSHpnU1RJbmdBcXB1Iiwic3ViIjoiMSIsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ._8tzn2ZF6JpRmM_u88vUqrphjGJA9qNNv4TcZFyG-lk",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/doctors",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"doctors"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getOne doctor",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/doctors/6",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"doctors",
+								"6"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create doctor",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvYXBpL2xvZ2luL3VzZXIiLCJpYXQiOjE2Njk1NTc2MzgsImV4cCI6MTY2OTY0NDAzOCwibmJmIjoxNjY5NTU3NjM4LCJqdGkiOiJyekVQenRadks1U3luMlkxIiwic3ViIjoiMSIsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.GxbxC1Ki23XmJjy1Db8kdEU9kUALX8oLC7rSkr1j-xc",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "service_id",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "fio",
+									"value": "Неважнов Неважно Неважнович",
+									"type": "text"
+								},
+								{
+									"key": "img",
+									"type": "file",
+									"src": "/C:/Users/Дима.DESKTOP-R642L0F/Desktop/allah.png"
+								},
+								{
+									"key": "code",
+									"value": "nevajno",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "123",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{host}}/doctors/",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"doctors",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update doctor",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvYXBpL2xvZ2luL3VzZXIiLCJpYXQiOjE2Njk0NTM2MTksImV4cCI6MTY2OTU0MDAxOSwibmJmIjoxNjY5NDUzNjE5LCJqdGkiOiJmbDQ2ejBueno1eWNpbEtTIiwic3ViIjoiMSIsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.pZrBm-3w3us7QcNyF3-naQ4rb5gz1ed-wYI5Fzc7GJg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "fio",
+									"value": "плевать уже",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "img",
+									"type": "file",
+									"src": "/C:/Users/Дима.DESKTOP-R642L0F/Desktop/allah.png"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{host}}/doctors/update/1",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"doctors",
+								"update",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete doctor",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvYXBpL2xvZ2luL3VzZXIiLCJpYXQiOjE2Njk0NTM2MTksImV4cCI6MTY2OTU0MDAxOSwibmJmIjoxNjY5NDUzNjE5LCJqdGkiOiJmbDQ2ejBueno1eWNpbEtTIiwic3ViIjoiMSIsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.pZrBm-3w3us7QcNyF3-naQ4rb5gz1ed-wYI5Fzc7GJg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/doctors/1",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"doctors",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "doctor me",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvYXBpL2xvZ2luL2RvY3RvcnMiLCJpYXQiOjE2Njk1NTc3NzEsImV4cCI6MTY2OTY0NDE3MSwibmJmIjoxNjY5NTU3NzcxLCJqdGkiOiJENnBNUWxqOFdSOGg3ZzZmIiwic3ViIjoiMiIsInBydiI6IjdmNzA2MmMzZDlkOTdhMjg3YjZkY2Y2NTkzNWFkNmRkZjJhNzI0N2YifQ.LEYwvhYFDKbCJ-hlhdb3MGyzu9gCTpNnxgcYBkNUe2M",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/doctors/me",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"doctors",
+								"me"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "login doctor",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"code\": \"nevajno\",\r\n    \"password\" : \"123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/login/doctors",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"login",
+								"doctors"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "receptions",
+			"item": [
+				{
+					"name": "getAll receptions",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvYXBpL2xvZ2luL3VzZXIiLCJpYXQiOjE2Njk1NjAwMTEsImV4cCI6MTY2OTY0NjQxMSwibmJmIjoxNjY5NTYwMDExLCJqdGkiOiIwMUpiRXhaUDZHTU1pRHZEIiwic3ViIjoiMSIsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.5Bn5ih137QGq-LJRgHJwU8iETGZlIYQ2IUbQgHlf8DM",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/receptions",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"receptions"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getOne receptions",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvYXBpL2xvZ2luL3VzZXIiLCJpYXQiOjE2Njk1NjAwMTEsImV4cCI6MTY2OTY0NjQxMSwibmJmIjoxNjY5NTYwMDExLCJqdGkiOiIwMUpiRXhaUDZHTU1pRHZEIiwic3ViIjoiMSIsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.5Bn5ih137QGq-LJRgHJwU8iETGZlIYQ2IUbQgHlf8DM",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/receptions/1",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"receptions",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create receptions",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvYXBpL2xvZ2luL3VzZXIiLCJpYXQiOjE2Njk1NjAwMTEsImV4cCI6MTY2OTY0NjQxMSwibmJmIjoxNjY5NTYwMDExLCJqdGkiOiIwMUpiRXhaUDZHTU1pRHZEIiwic3ViIjoiMSIsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.5Bn5ih137QGq-LJRgHJwU8iETGZlIYQ2IUbQgHlf8DM",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"doctor_id\": 2,\r\n    \"date\": \"2022-11-27\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/receptions/",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"receptions",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update receptions",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvYXBpL2xvZ2luL3VzZXIiLCJpYXQiOjE2Njk0NTM2MTksImV4cCI6MTY2OTU0MDAxOSwibmJmIjoxNjY5NDUzNjE5LCJqdGkiOiJmbDQ2ejBueno1eWNpbEtTIiwic3ViIjoiMSIsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.pZrBm-3w3us7QcNyF3-naQ4rb5gz1ed-wYI5Fzc7GJg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "{{host}}/receptions/update/1",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"receptions",
+								"update",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete receptions",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvYXBpL2xvZ2luL3VzZXIiLCJpYXQiOjE2Njk1NjAwMTEsImV4cCI6MTY2OTY0NjQxMSwibmJmIjoxNjY5NTYwMDExLCJqdGkiOiIwMUpiRXhaUDZHTU1pRHZEIiwic3ViIjoiMSIsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.5Bn5ih137QGq-LJRgHJwU8iETGZlIYQ2IUbQgHlf8DM",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/receptions/1",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"receptions",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getAll receptions for user",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvYXBpL2xvZ2luL3VzZXIiLCJpYXQiOjE2Njk1NjAwMTEsImV4cCI6MTY2OTY0NjQxMSwibmJmIjoxNjY5NTYwMDExLCJqdGkiOiIwMUpiRXhaUDZHTU1pRHZEIiwic3ViIjoiMSIsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.5Bn5ih137QGq-LJRgHJwU8iETGZlIYQ2IUbQgHlf8DM",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/receptions/user",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"receptions",
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "New Request",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvYXBpL2xvZ2luL3VzZXIiLCJpYXQiOjE2Njk1NjAwMTEsImV4cCI6MTY2OTY0NjQxMSwibmJmIjoxNjY5NTYwMDExLCJqdGkiOiIwMUpiRXhaUDZHTU1pRHZEIiwic3ViIjoiMSIsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.5Bn5ih137QGq-LJRgHJwU8iETGZlIYQ2IUbQgHlf8DM",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": 1,\r\n    \"status\": \"завершен\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/receptions/status",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"receptions",
+								"status"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "coplete reception",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvYXBpL2xvZ2luL3VzZXIiLCJpYXQiOjE2Njk1NjAwMTEsImV4cCI6MTY2OTY0NjQxMSwibmJmIjoxNjY5NTYwMDExLCJqdGkiOiIwMUpiRXhaUDZHTU1pRHZEIiwic3ViIjoiMSIsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.5Bn5ih137QGq-LJRgHJwU8iETGZlIYQ2IUbQgHlf8DM",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": 1,\r\n    \"result\": \"прием прошел по методу 5-25 и выдал результат с которым можно разворачивать белгород. Диагноз: Дудай\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/receptions/complete",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"receptions",
+								"complete"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "accept reception",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvYXBpL2xvZ2luL3VzZXIiLCJpYXQiOjE2Njk1NjAwMTEsImV4cCI6MTY2OTY0NjQxMSwibmJmIjoxNjY5NTYwMDExLCJqdGkiOiIwMUpiRXhaUDZHTU1pRHZEIiwic3ViIjoiMSIsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.5Bn5ih137QGq-LJRgHJwU8iETGZlIYQ2IUbQgHlf8DM",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/receptions/accept/1",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"receptions",
+								"accept",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "cancel reception",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvYXBpL2xvZ2luL3VzZXIiLCJpYXQiOjE2Njk1NjAwMTEsImV4cCI6MTY2OTY0NjQxMSwibmJmIjoxNjY5NTYwMDExLCJqdGkiOiIwMUpiRXhaUDZHTU1pRHZEIiwic3ViIjoiMSIsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.5Bn5ih137QGq-LJRgHJwU8iETGZlIYQ2IUbQgHlf8DM",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/receptions/cancel/1",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"receptions",
+								"cancel",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "host",
+			"value": "http://127.0.0.1:8000/api",
+			"type": "string"
+		}
+	]
+}

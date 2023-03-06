@@ -18,6 +18,13 @@ class ReceptionsService
     public function getAllForUser() {
         $user = Auth::user();
 
+        if (!$user) {
+            return response()->json([
+                'success' => false,
+                "data"=> "только клиент может смотреть свои заявки"
+            ]);
+        }
+
         return Receptions::with(["user", "doctor.services"])->where("user_id", $user["id"])->get();
     }
 
@@ -28,6 +35,12 @@ class ReceptionsService
     public function create(CreateReceptionRequest $request){
          try {
             $user = Auth::user();
+            if (!$user) {
+                return response()->json([
+                    'success' => false,
+                    "data"=> "только клиент может создавать заявку"
+                ]);
+            }
 
              $receptions = Receptions::create([
                 'user_id' => $user["id"],

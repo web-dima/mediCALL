@@ -21,7 +21,7 @@ class DoctorsService
             return response()->json([
                 "success" => false,
                 "data" =>"неверный логин или пароль"
-            ], 525);
+            ], 200);
         }
         $doctor = Auth::guard("doctors")->user();
         $popi = DB::table("services")->where('id', '=', $doctor["service_id"])->get();
@@ -72,7 +72,7 @@ class DoctorsService
                         'expires_in' => auth()->guard("doctors")->factory()->getTTL() * 60
                     ]
                 ]
-            ]);
+            ],201);
         }catch (\Exception $e) {
             return response()->json([
                 "success" => false,
@@ -139,7 +139,7 @@ class DoctorsService
 
             return response()->json([
                 "success"=> false,
-                'data' => "че то пошло не так, ларавел сволочь виноват однозначно",
+                'data' => "че то пошло не так, ларавел виноват однозначно",
                 "error" => $e
             ],500);
         }

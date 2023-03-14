@@ -7,7 +7,7 @@ import Footer from "../../components/Footer";
 const MainLayout: FC = ()=> {
     return(
         <div className={styles.MainLayout}>
-            <Header />
+            <Header adminHeader={false}/>
             <main>
                 <Outlet />
             </main>

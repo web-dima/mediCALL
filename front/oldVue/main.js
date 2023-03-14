@@ -1,6 +1,62 @@
 const app = new Vue({
     el: '#app',
     data: {
+        //
+        //
+        // userData:{
+        //     id:null,
+        //     login:null,
+        //     password:null,
+        // },
+        //
+        //
+        //
+        //
+        //
+        // page: "index",
+        // res: {},
+        // registrationForm: {
+        //     name: "",
+        //     login: "",
+        //     email: "",
+        //     phone: "",
+        //     password: "",
+        // },
+        // api_token: "",
+        // registrationResponce: null,
+        //
+        //
+        //
+        //
+        //
+        // page:"index",
+        // res:{},
+        // categories:{},
+        //
+        // tovars:{},
+        // selectCategory:0,
+        // selCategory:0,
+        // searchInputTovar:"",
+        // selectCategory:"",
+        //
+        //
+        //
+        // regResponse: null,
+        // message:"",
+        // registerForm:{
+        //    name:"",
+        //    login:"",
+        //    email:"",
+        //    phone:"",
+        //    password:""
+        // },
+        //
+        //    message:"",
+        //    loginForm:{
+        //        login:null,
+        //        password:null
+        //
+        //    },
         server: "http://127.0.0.1:8000/api/",
         services: [],
         doctors: [],
@@ -35,6 +91,65 @@ const app = new Vue({
         }
     },
     methods: {
+
+
+        // logout() {
+        //     fetch("http://jtdgzmn-m1.wsr.ru/prokats/public/api/logout", {
+        //         method: "POST",
+        //         body: JSON.stringify({
+        //             api_token: this.api_token,
+        //         }),
+        //         headers: { "Content-Type": "application/json;charset=utf-8" },
+        //     })
+        //         .then((response) =>
+        //             response.json().then((data1) => {
+        //                 this.registrationResponce = {
+        //                     status: response.status,
+        //                     body: data1,
+        //                 };
+        //                 this.api_token = null;
+        //                 this.userData.login = null;
+        //                 this.userData.password = null;
+        //                 console.log(this.registrationResponce.body.message);
+        //             })
+        //         )
+        //         .catch((error) => {
+        //             console.error(error);
+        //         });
+        // },
+        // searchTovar(){
+        //     fetch('http://jtdgzmn-m1.wsr.ru/prokats/public/api/search?query='+this.searchInputTovar)
+        //         .then(response => response.json())
+        //         .then(data => {
+        //             console.log(data);
+        //             this.tovars = data;
+        //         })
+        // },
+        // getTovar() {
+        //     console.log(4444);
+        //     fetch('http://jtdgzmn-m1.wsr.ru/prokats/public/api/tovar')
+        //         .then(response => response.json())
+        //         .then(data => {
+        //             console.log(data);
+        //             this.tovars = data;
+        //         })
+        // },
+        // getCategory(){
+        //     fetch('http://jtdgzmn-m1.wsr.ru/prokats/public/api/category')
+        //         .then(response => response.json())
+        //         .then(data => {
+        //             console.log(data);
+        //             this.categories = data;
+        //         })
+        // },
+        // getTovarByCategory(){
+        //     fetch('http://jtdgzmn-m1.wsr.ru/prokats/public/api/category/'+this.selCategory+'/tovar')
+        //         .then(response => response.json())
+        //         .then(data => {
+        //             console.log(data);
+        //             this.tovars = data;
+        //         })
+        // }
         getServices() {
             this.page = "services"
             fetch(this.server + "service")

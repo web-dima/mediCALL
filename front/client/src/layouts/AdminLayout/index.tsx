@@ -1,13 +1,17 @@
 import {FC} from "react";
 import styles from "./AdminLayout.module.scss"
 import {Outlet} from "react-router-dom";
+import Header from "../../components/Header";
+import Footer from "../../components/Footer";
 
 const AdminLayout: FC = ()=> {
     return(
         <div className={styles.AdminLayout}>
-            <header>123</header>
+            <Header adminHeader/>
+            <main>
                 <Outlet />
-            <footer>123</footer>
+            </main>
+            <Footer/>
         </div>
     )
 }

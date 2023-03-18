@@ -1,11 +1,12 @@
-import {FC, useContext, useState} from "react";
+import {FC, useState} from "react";
 import styles from "./Register.module.scss"
 import {Link, useNavigate} from "react-router-dom";
 import {AuthService} from "../../api/Services/AuthService";
-import {AuthContext} from "../../App";
+import {UserRole} from "../../api/Types/UserRole";
+import {useAuth} from "../../hooks/useAuth";
 
 const Register: FC = ()=> {
-    const context = useContext(AuthContext);
+    const context = useAuth()
     const navigate = useNavigate()
     // if (context.auth) navigate("/");
 
@@ -18,11 +19,12 @@ const Register: FC = ()=> {
     function submitHandler(e) {
         e.preventDefault()
         authService.register({name,email,password}).then((result)=> {
-            if (typeof result === "number") {
+            if (result.role === UserRole.admin) {
+                context.setUserId(result)
+                navigate("/admin")
+            } else {
                 context.setUserId(result)
                 navigate("/")
-            } else {
-                alert(result)
             }
         })
     }

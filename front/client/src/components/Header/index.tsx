@@ -1,30 +1,24 @@
-import {FC, useContext, useState} from "react";
+import {FC, useContext, useEffect, useState} from "react";
 import styles from "./Header.module.scss"
 import {Link, useNavigate} from "react-router-dom";
 import {AuthContext} from "../../App";
 import {UserService} from "../../api/Services/UserService";
+import {useAuth} from "../../hooks/useAuth";
 
-const Header: FC<{adminHeader:boolean}> = ({adminHeader})=> {
-    const {userId, setUserId} = useContext(AuthContext);
-    const [isAdmin, setIsAdmin] = useState(false)
-
+const Header: FC = ()=> {
+    const {userId, setUserId} = useAuth()
+    console.log(userId)
     const nav = useNavigate()
     const userService = new UserService()
-    userService.me().then(data => setIsAdmin(data.role === "admin")).catch(e=> console.log(e))
-
-    const adminLinks = (
-        <>
-            <Link to="admin">Админ панель</Link>
-        </>
-    )
 
     const userLinks = (
         <>
             <Link to="/">главная</Link>
-            <Link to="">Профиль</Link>
+            <Link to="/profile">Профиль</Link>
             <a href="/sosiEsLint" onClick={(e) => {
                 e.preventDefault()
                 userService.logout()
+                setUserId(0);
                 nav("/")
             }}>Выйти</a>
         </>
@@ -37,25 +31,18 @@ const Header: FC<{adminHeader:boolean}> = ({adminHeader})=> {
         </>
     )
 
-    const adminchickhueta = (
-        <div className={styles.Header}>
-            {userId ? userLinks : guestLinks}
-        </div>
-    )
-
-    const userhueta = (
-        <div className={styles.Header}>
-            {isAdmin ? adminLinks : ""}
-            {userId ? userLinks : guestLinks}
-        </div>
-    )
-
-    const header = adminHeader ? adminchickhueta : userhueta
-
+    const headerLinks = userId ? userLinks : guestLinks
     return(
-        <>
-            {header}
-        </>
+        <div className={styles.Header}>
+                <div className={styles.header__inner}>
+                    <Link to="/"><img src="/img/logo.png" alt="" width={100} height={100}/></Link>
+
+                    <div className={styles.header__text}>
+                        {headerLinks}
+                    </div>
+
+                </div>
+        </div>
     )
 }
 

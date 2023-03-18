@@ -1,4 +1,6 @@
 export interface Context {
-    userId: number;
+    userId: number
     setUserId: Function
+    isAdmin: boolean;
+    setIsAdmin: Function
 }

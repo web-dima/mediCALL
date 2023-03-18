@@ -29,7 +29,6 @@ export class ServiceService extends Service{
                 "Content-Type": "multipart/form-data"
             }
         })
-        // console.log(data)
         return resp.data.success ? "good" : "sos"
     }
 }

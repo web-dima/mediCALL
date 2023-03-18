@@ -1,23 +1,26 @@
-import {FC, useContext, useState} from "react";
+import {FC, useState} from "react";
 import styles from "./Login.module.scss"
 import {Link, useNavigate} from "react-router-dom";
 import {AuthService} from "../../api/Services/AuthService";
-import {AuthContext} from "../../App";
+import {UserRole} from "../../api/Types/UserRole";
+import {useAuth} from "../../hooks/useAuth";
 
 const Login: FC = ()=> {
     const authService = new AuthService()
-    const context = useContext(AuthContext);
+    const context = useAuth()
     const navigate = useNavigate()
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     function submitHandler(e) {
         e.preventDefault()
         authService.login({email,password}).then((result)=> {
-            if (typeof result === "number") {
-                context.setUserId(result)
-                navigate("/")
+            if (result.role === UserRole.admin) {
+                context.setIsAdmin(true)
+                context.setUserId(result.id)
+                navigate("/admin")
             } else {
-                alert(result)
+                context.setUserId(result.id)
+                navigate("/")
             }
         })
     }

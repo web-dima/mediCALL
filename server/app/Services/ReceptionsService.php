@@ -42,7 +42,7 @@ class ReceptionsService
                 ]);
             }
 
-             $receptions = Receptions::create([
+            $receptions = Receptions::create([
                 'user_id' => $user["id"],
                 'doctor_id' => $request["doctor_id"],
                 'date' =>$request["date"]

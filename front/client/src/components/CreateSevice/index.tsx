@@ -20,6 +20,7 @@ const CreateService: FC = ()=> {
                 nav("/admin")
             })
             .catch(e => {
+                alert("КВЕРИ ФЕЙЛД")
                 console.log(e)
             })
     }

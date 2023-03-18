@@ -1,4 +1,4 @@
-import {createContext, FC, useState} from "react";
+import {FC} from "react";
 import {Route, Routes} from "react-router-dom"
 import Home from "./pages/Home";
 import MainLayout from "./layouts/MainLayout";
@@ -6,30 +6,47 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Services from "./pages/Services";
 import Service from "./pages/Service";
-import {Context} from "./types/Context";
 import Admin from "./pages/Admin";
 import AdminLayout from "./layouts/AdminLayout";
-
-export const AuthContext = createContext<Context>({}as Context)
-
+import CheckAuth from "./hoc/CheckAuth";
+import CheckAdmin from "./hoc/CheckAdmin";
+import AuthProvider from "./providers/AuthProvider";
+import Profile from "./pages/Profile";
+export const imgFolder = "http://localhost:8000/uploads/img/"
 const App: FC = ()=> {
-    const [userId, setUserId] = useState(0)
-
     return(
-        <AuthContext.Provider value={{userId, setUserId}}>
+        <AuthProvider>
             <Routes>
                 <Route path="/" element={<MainLayout/>}>
                     <Route index element={<Home/>}/>
-                    <Route path="/login" element={<Login/>}/>
-                    <Route path="/register" element={<Register/>}/>
+                        <Route path="/login" element={
+                            <CheckAuth>
+                                <Login/>
+                            </CheckAuth>
+                        }/>
+                        <Route path="/register" element={
+                            <CheckAuth>
+                                <Register/>
+                            </CheckAuth>
+                        }/>
+                    <Route path="/profile" element={
+                        <CheckAuth>
+                            <Profile/>
+                        </CheckAuth>
+                    }/>
                     <Route path="/services" element={<Services/>}/>
                     <Route path="/services/:id" element={<Service/>}/>
                 </Route>
+
                 <Route path="/admin" element={<AdminLayout/>}>
-                    <Route index element={<Admin/>}/>
+                    <Route index element={
+                        <CheckAdmin>
+                            <Admin/>
+                        </CheckAdmin>
+                    }/>
                 </Route>
             </Routes>
-        </AuthContext.Provider>
+        </AuthProvider>
     )
 }
 

@@ -31,6 +31,7 @@ export class DoctorsService extends Service{
 
     public async getDoctors() {
         const docs = await this.$publicApi.get("/doctors")
+        console.log(docs)
         return docs.data
     }
 

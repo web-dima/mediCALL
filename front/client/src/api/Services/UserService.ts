@@ -8,16 +8,14 @@ export class UserService extends Service{
     }
 
     public async me() {
-
         const resp = await this.$privateApi.post("/me")
-
         return resp.data
     }
 
     public async logout() {
 
         const resp = await this.$privateApi.post("/logout")
-        localStorage.removeItem("userId")
+        localStorage.removeItem(`${AxiosTypes.users}_token`)
     }
 
     // public isAdmin() {

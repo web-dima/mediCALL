@@ -26,9 +26,10 @@ const RegisterDoctor: FC = ()=> {
         doctorService.createDoctor({service_id,fio, img: imgRef, code, password})
             .then(data => {
                 console.log(data)
-                nav("/admin")
+                alert("врач создался")
             })
             .catch(e => {
+                alert("КВЕРИ ФЕЙЛД")
                 console.log(e)
             })
     }
@@ -69,7 +70,6 @@ const RegisterDoctor: FC = ()=> {
                 />
                 <button>Войти</button>
             </form>
-            <span>нет аккаунта?<Link to="../register">Зарегистрируйтейсь</Link></span>
         </div>
     )
 }

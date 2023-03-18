@@ -49,7 +49,6 @@ class ServiceService {
                 'after_GP' => filter_var($request["after_GP"], FILTER_VALIDATE_BOOLEAN),
                 'img' => "$path"
             ]);
-            var_dump($s);
             return response()->json([
                 'success' => true,
                 "data"=> $s

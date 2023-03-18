@@ -23,12 +23,13 @@ class DoctorCreateRequest extends FormRequest
      *
      * @return array<string, mixed>
      */
+    //|image|mimes:jpeg,png,jpg,gif,svg
     public function rules()
     {
         return [
             'service_id' => 'required|integer',
             'fio' => 'required|string',
-            'img' => 'required|image|mimes:jpeg,png,jpg,gif,svg',
+            'img' => 'required',
             'code' => 'required|unique:doctors|string',
             'password' => 'required|string',
         ];

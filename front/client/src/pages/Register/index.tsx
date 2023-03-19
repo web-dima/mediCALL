@@ -19,6 +19,10 @@ const Register: FC = ()=> {
     function submitHandler(e) {
         e.preventDefault()
         authService.register({name,email,password}).then((result)=> {
+			if (typeof result === "string") {
+				alert(result)
+				return
+			}
             if (result.role === UserRole.admin) {
                 context.setUserId(result)
                 navigate("/admin")

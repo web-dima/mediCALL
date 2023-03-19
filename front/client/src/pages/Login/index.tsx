@@ -14,6 +14,10 @@ const Login: FC = ()=> {
     function submitHandler(e) {
         e.preventDefault()
         authService.login({email,password}).then((result)=> {
+			if (typeof result === "string") {
+				alert(result)
+				return
+			}
             if (result.role === UserRole.admin) {
                 context.setIsAdmin(true)
                 context.setUserId(result.id)

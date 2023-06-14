@@ -1,1 +1,0 @@
-export type PhpBool = 0|1

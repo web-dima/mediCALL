@@ -47,7 +47,8 @@ const Login: FC = ()=> {
                     Войти
                 </Button>
             </Form>
-            <span>нет аккаунта?<Link to="../register">Зарегистрируйтейсь</Link></span>
+            <span className={styles.notAcc}>нет аккаунта?<Link to="../register">Зарегистрируйтейсь</Link></span>
+            <span>вы врач? <Link to="/doctor/login">Войдите в систему</Link></span>
         </div>
     )
 }

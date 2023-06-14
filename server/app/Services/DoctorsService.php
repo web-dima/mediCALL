@@ -40,7 +40,9 @@ class DoctorsService
     }
 
     function me() {
-        return Auth::guard("doctors")->user();
+        $doc = Auth::guard("doctors")->user();
+        if (!$doc) return response()->json(['status' => 'ошибочный токен'], 401);
+        return $doc;
     }
 
     function create(DoctorCreateRequest $request) {

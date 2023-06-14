@@ -3,4 +3,6 @@ export interface Context {
     setUserId: Function
     isAdmin: boolean;
     setIsAdmin: Function
+    isDoctor: boolean;
+    setIsDoctor: Function
 }

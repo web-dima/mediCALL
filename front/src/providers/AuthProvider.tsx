@@ -15,6 +15,7 @@ const AuthProvider: FC<ChildrenProps> = ({children})=> {
     const userService = new UserService()
     const [userId, setUserId] = useState(0)
     const [isAdmin, setIsAdmin] = useState(false)
+    const [isDoctor, setIsDoctor] = useState(false)
     const [loading, setLoading] = useState(true)
 
 
@@ -30,7 +31,7 @@ const AuthProvider: FC<ChildrenProps> = ({children})=> {
         })
     }, [])
 
-    const value = {userId, setUserId, isAdmin, setIsAdmin};
+    const value = {userId, setUserId, isAdmin, setIsAdmin, isDoctor, setIsDoctor};
 
     if (!loading) {
         return <AuthContext.Provider value={value}>

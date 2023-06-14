@@ -1,0 +1,30 @@
+.Header {
+  margin-bottom: 20px;
+
+  background-color: antiquewhite;
+
+  a {
+    margin-right: 15px;
+  }
+}
+
+.header__inner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+.header__text {
+  display: flex;
+  flex: 1;
+  justify-content: center;
+  font-size: 25px;
+
+}
+
+.header__text a {
+  text-decoration: none;
+  color: black;
+  font-family: sans-serif;
+}

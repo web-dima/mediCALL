@@ -49,9 +49,11 @@ const Doctor: FC<DoctorProps> = ({data, fromProfile})=> {
                 <>
                     <input
                     type="date"
+                    // className="form-control"
                     value={dateInput}
                     onChange={(e) => setDateInput(e.target.value)}/>
 
+                    {/*<button className="btn btn-primary mt-3" onClick={clickHandler} data-id={data.id}>записаться</button>*/}
                     <button onClick={clickHandler} data-id={data.id}>записаться</button>
                 </>
             }

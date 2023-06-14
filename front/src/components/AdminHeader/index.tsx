@@ -1,8 +1,7 @@
-import {FC, useContext} from "react";
+import {FC} from "react";
 import styles from "./AdminHeader.module.scss"
 import {Link, useNavigate} from "react-router-dom";
 import {AuthService} from "../../api/Services/AuthService";
-// import {AuthContext} from "../../App";
 import {useAuth} from "../../hooks/useAuth";
 
 const AdminHeader: FC = ()=> {

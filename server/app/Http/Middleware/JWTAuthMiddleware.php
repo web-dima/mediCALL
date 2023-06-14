@@ -5,6 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Tymon\JWTAuth\Exceptions\TokenExpiredException;
 use Tymon\JWTAuth\Exceptions\TokenInvalidException;
 use Tymon\JWTAuth\Facades\JWTAuth;
@@ -33,6 +34,9 @@ class JWTAuthMiddleware
                 return response()->json(['status' => 'не авторизован'], 401);
             }
         }
+//        return $user;
+//        Log::info($user);
+//        if (!$user) return response()->json(['status' => 'ошибочный токен'], 401);
         $request["user"] = $user;
         return $next($request);
     }

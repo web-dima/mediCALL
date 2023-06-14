@@ -9,7 +9,7 @@ interface AuthHocProps {
 const CheckAuth: FC<AuthHocProps> = ({children})=> {
     const {userId} = useAuth()
     const location = useLocation()
-    const isLoginPages = location.pathname === "/login" || location.pathname === "/register"
+    const isLoginPages = location.pathname === "/login" || location.pathname === "/register" || location.pathname === "/doctor/login"
 
     if (userId && isLoginPages) {
         return(

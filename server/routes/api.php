@@ -35,9 +35,6 @@ Route::group(['middleware' => 'api'], function () {
             Route::post("/user/update/{id}", "update");
             Route::delete("/user/{id}", "delete");
         });
-        Route::controller(DoctorsController::class)->group(function () {
-            Route::post("/doctors/me", "me");
-        });
         Route::controller(ReceptionsController::class)->group(function () {
             Route::get("/receptions", "getAll");
             Route::get("/receptions/user", "getAllForUser");
@@ -64,6 +61,11 @@ Route::group(['middleware' => 'api'], function () {
                 Route::delete("/doctors/{id}", "delete");
             });
         });
+    });
+
+
+    Route::controller(DoctorsController::class)->group(function () {
+        Route::post("/doctors/me", "me");
     });
 });
 

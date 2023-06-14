@@ -3,6 +3,11 @@ export interface LoginDto {
     password: string
 }
 
+export interface DoctorLogin {
+    code: string
+    password: string
+}
+
 export interface RegisterDto {
     name: string
     email: string

@@ -7,7 +7,7 @@ use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
-class ServiceSeeder extends Seeder
+class UserService extends Seeder
 {
     /**
      * Run the database seeds.
@@ -16,7 +16,7 @@ class ServiceSeeder extends Seeder
      */
     public function run()
     {
-        
+
         DB::table("users")->insert(
             [
                 [

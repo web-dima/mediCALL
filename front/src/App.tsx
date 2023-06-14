@@ -12,6 +12,10 @@ import CheckAuth from "./hoc/CheckAuth";
 import CheckAdmin from "./hoc/CheckAdmin";
 import AuthProvider from "./providers/AuthProvider";
 import Profile from "./pages/Profile";
+import DoctorLogin from "./pages/DoctorLogin";
+import Doctor from "./pages/Doctor";
+import DoctorLayout from "./layouts/DoctorLayout";
+import CheckDoctor from "./hoc/CheckDoctor";
 export const imgFolder = "http://localhost:8000/uploads/img/"
 const App: FC = ()=> {
     return(
@@ -29,6 +33,11 @@ const App: FC = ()=> {
                                 <Register/>
                             </CheckAuth>
                         }/>
+                        <Route path="/doctor/login" element={
+                            <CheckAuth>
+                                <DoctorLogin/>
+                            </CheckAuth>
+                        }/>
                     <Route path="/profile" element={
                         <CheckAuth>
                             <Profile/>
@@ -44,6 +53,14 @@ const App: FC = ()=> {
                             <Admin/>
                         </CheckAdmin>
                     }/>
+                </Route>
+
+                <Route path="/doctor" element={<DoctorLayout/>}>
+                    <Route index element={
+                        <CheckDoctor>
+                            <Doctor/>
+                        </CheckDoctor>}
+                    />
                 </Route>
             </Routes>
         </AuthProvider>

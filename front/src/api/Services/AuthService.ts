@@ -1,6 +1,6 @@
 import {AxiosTypes} from "../axios/types";
 import {Service} from "./Service";
-import {LoginDto, RegisterDto} from "../Dto/AuthDto";
+import {DoctorLogin, LoginDto, RegisterDto} from "../Dto/AuthDto";
 import {IResponse} from "../Dto/response/IResponse";
 import {IAuthResponse} from "../Dto/response/IAuthResponse";
 
@@ -41,6 +41,7 @@ export class AuthService extends Service{
     }
 
     public async logout() {
-
+        localStorage.removeItem(`${AxiosTypes.users}_token`)
+        localStorage.removeItem("userId")
     }
 }

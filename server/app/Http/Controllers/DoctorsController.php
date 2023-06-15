@@ -7,6 +7,7 @@ use App\Http\Requests\LoginDoctorRequest;
 use App\Services\DoctorsService;
 use Illuminate\Http\Request;
 use App\Http\Requests\DoctorCreateRequest;
+use Illuminate\Support\Facades\Log;
 
 class DoctorsController extends Controller
 {
@@ -32,6 +33,14 @@ class DoctorsController extends Controller
 
     function me() {
         return $this->DoctorsService->me();
+    }
+
+    function getAllReceptionsForDoc() {
+        return $this->DoctorsService->getAllReceptionsForDoc();
+    }
+
+    function getReceptionsByStatus(Request $request) {
+        return $this->DoctorsService->getReceptionsByStatus($request);
     }
 
     function delete($id) {

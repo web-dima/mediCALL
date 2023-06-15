@@ -4,6 +4,8 @@ import {Context} from "../types/Context";
 import {UserRole} from "../api/Types/UserRole";
 
 import {ClipLoader} from "react-spinners";
+import {AxiosTypes} from "../api/axios/types";
+import {AuthDoctorService} from "../api/Services/AuthDoctorService";
 
 export const AuthContext = createContext<Context>({}as Context)
 
@@ -12,20 +14,24 @@ interface ChildrenProps {
 }
 
 const AuthProvider: FC<ChildrenProps> = ({children})=> {
-    const userService = new UserService()
+    let userService = new UserService()
     const [userId, setUserId] = useState(0)
     const [isAdmin, setIsAdmin] = useState(false)
     const [isDoctor, setIsDoctor] = useState(false)
     const [loading, setLoading] = useState(true)
-
+    if (localStorage.getItem(`${AxiosTypes.doctors}_token`)) {
+        userService = new AuthDoctorService()
+    }
 
     useEffect(()=> {
         userService.me().then(data => {
             setIsAdmin(data.role === UserRole.admin)
+            setIsDoctor(Boolean(data.code))
             setUserId(data.id)
             setLoading(false)
         }).catch(err => {
             setUserId(0)
+            setIsDoctor(false)
             setIsAdmin(false)
             setLoading(false)
         })

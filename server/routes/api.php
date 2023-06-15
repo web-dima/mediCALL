@@ -66,6 +66,8 @@ Route::group(['middleware' => 'api'], function () {
 
     Route::controller(DoctorsController::class)->group(function () {
         Route::post("/doctors/me", "me");
+        Route::get("/doctors/get/receptions", "getAllReceptionsForDoc");
+        Route::post("/doctors/post/receptions", "getReceptionsByStatus");
     });
 });
 
@@ -83,7 +85,7 @@ Route::group([], function (){
     });
 
     Route::controller(DoctorsController::class)->group(function () {
-        Route::post('/login/doctors', ['as' => 'login', 'uses' => 'login']);
+        Route::post('/login/doctors', "login");
         Route::get("/doctors", "getAll");
         Route::get("/doctors/{id}", "getOne");
     });

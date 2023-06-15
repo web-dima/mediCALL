@@ -23,11 +23,11 @@ const Header: FC = ()=> {
     useEffect(function (){
         if (userId || docToken) {
             userService.me().then((data)=>{
-                console.log(data)
+                // console.log(data)
                 const admin = data.role === "admin" ? <Link to="/admin">Админ панель</Link> : null
                 const doctor = data.code ? <Link to="/doctor">Врачебная панель</Link> : null
-                console.log(doctor)
-                console.log(data)
+                // console.log(doctor)
+                // console.log(data)
                 const userLinks = (
                     <>
                         <Link to="/">Главная</Link>

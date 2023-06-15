@@ -1,0 +1,12 @@
+.Doctors {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  gap: 50px;
+}
+
+.wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5%;
+}

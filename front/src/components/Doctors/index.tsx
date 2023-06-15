@@ -10,9 +10,9 @@ const Doctors: FC = ()=> {
 
     useEffect(()=> {
         doctorsService.getDoctors().then(data => {
-            console.log(data)
+            // console.log(data)
             setDoctors(data)
-            console.log(doctors)
+            // console.log(doctors)
         }).catch(e=> console.log(e))
     }, [])
 

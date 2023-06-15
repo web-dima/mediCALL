@@ -16,7 +16,7 @@ export class ServiceService extends Service{
 
     public async createService(data: CreateService) {
         if (!data.name || !data.afterGP || data.img === undefined) {
-            return "зачем пусто отправил а?"
+            return "не все поля заполнены"
         }
         console.log(data.img.current.files[0])
         const formData = new FormData()

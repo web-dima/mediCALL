@@ -154,4 +154,28 @@ class DoctorsService
     function getOne($id) {
         return Doctors::with("services")->find($id);
     }
+
+    public function getAllReceptionsForDoc(){
+        $doc = Auth::guard("doctors")->user();
+        if (!$doc) {
+            return response()->json([
+                "success"=> false,
+                'data' => "врач не найден"
+            ],404);
+        }
+
+        return $doc->receptions()->with(["user"])->get();
+    }
+
+    public function getReceptionsByStatus(Request $request){
+        $doc = Auth::guard("doctors")->user();
+        if (!$doc) {
+            return response()->json([
+                "success"=> false,
+                'data' => "врач не найден"
+            ],404);
+        }
+
+        return $doc->receptions()->with(["user"])->where("status", "=", $request->status)->get();
+    }
 }

@@ -37,8 +37,6 @@ const Doctor: FC<DoctorProps> = ({data, fromProfile})=> {
             nav("/login")
         })
     }
-
-    console.log(data.photo)
     
     return(
         <div key={data.id} className={styles.doctor}>

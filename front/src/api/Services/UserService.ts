@@ -15,6 +15,7 @@ export class UserService extends Service{
     public async logout() {
         const resp = await this.$privateApi.post("/logout")
         localStorage.removeItem(`${AxiosTypes.users}_token`)
+        localStorage.removeItem("userId")
     }
 
 }

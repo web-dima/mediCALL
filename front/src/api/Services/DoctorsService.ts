@@ -10,7 +10,7 @@ export class DoctorsService extends Service{
 
     public async createDoctor(data: CreateDoctorDto) {
         if (!data.service_id || !data.fio || data.img === undefined || !data.code || !data.password) {
-            return "зачем пусто отправил а?"
+            return "не все поля заполнены"
         }
         console.log(data.img.current.files[0])
         const formData = new FormData()
@@ -31,7 +31,6 @@ export class DoctorsService extends Service{
 
     public async getDoctors() {
         const docs = await this.$publicApi.get("/doctors")
-        console.log(docs)
         return docs.data
     }
 

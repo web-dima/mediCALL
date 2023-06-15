@@ -10,3 +10,5 @@ export interface IReception {
     user: IUser
     doctor: IDoctor
 }
+
+export type DoctorReceptionType = Omit<IReception, "doctor">

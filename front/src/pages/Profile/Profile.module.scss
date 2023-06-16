@@ -1,8 +1,11 @@
 .list {
   display: flex;
   justify-content: space-between;
+  flex-wrap: wrap;
 }
-
+.Profile {
+  padding: 0 20px;
+}
 .Profile > h1 {
   margin-bottom: 20px;
 }

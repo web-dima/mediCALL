@@ -34,17 +34,20 @@ Route::group(['middleware' => 'api'], function () {
             Route::post("/user", "create");
             Route::post("/user/update/{id}", "update");
             Route::delete("/user/{id}", "delete");
+            Route::post("/user/d/d", "popa");
         });
         Route::controller(ReceptionsController::class)->group(function () {
             Route::get("/receptions", "getAll");
             Route::get("/receptions/user", "getAllForUser");
             Route::get("/receptions/{id}", "getOne");
             Route::post("/receptions", "create");
-            Route::delete("/receptions/{id}", "delete");
+//            Route::delete("/receptions/{id}", "delete");
             Route::patch("/receptions/status", "changeStatus");
             Route::post("/receptions/complete", "complete");
             Route::patch("/receptions/accept/{id}", "accept");
             Route::patch("/receptions/cancel/{id}", "cancel");
+            Route::post("/receptions/return/{id}", "backToActive");
+            Route::post("/receptions/delete/{id}", "delete");
         });
         //роуты требующие роль админа
         Route::group(['middleware' => ["check.admin"]], function () {
@@ -55,7 +58,7 @@ Route::group(['middleware' => 'api'], function () {
             });
 
             Route::controller(DoctorsController::class)->group(function () {
-
+                Route::post('/login/doctors/admin', "AuthDoctorByAdmin");
                 Route::post("/doctors", "create");
                 Route::post("/doctors/update/{id}", "update");
                 Route::delete("/doctors/{id}", "delete");

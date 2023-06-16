@@ -7,7 +7,6 @@ interface CheckAdminProps {
 }
 
 const CheckDoctor: FC<CheckAdminProps> = ({children})=> {
-    console.log(123)
     const {isDoctor} = useAuth()
     console.log(isDoctor)
     if (isDoctor) {

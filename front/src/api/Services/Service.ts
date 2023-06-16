@@ -5,9 +5,11 @@ import {AxiosTypes} from "../axios/types";
 export class Service {
     protected readonly $publicApi:AxiosInstance
     protected readonly $privateApi:AxiosInstance;
+    protected readonly $imgUrl:string;
 
     constructor(type: AxiosTypes) {
         const axios = new Axios(type)
+        this.$imgUrl = axios.getImgUrl
         this.$publicApi = axios.getAxios
         // console.log(this.$publicApi)
         axios.makeAxiosAuth()
@@ -17,5 +19,9 @@ export class Service {
 
     protected getApies() {
         return {public: this.$privateApi,private: this.$publicApi}
+    }
+
+    get getImgUrl(){
+        return this.$imgUrl
     }
 }

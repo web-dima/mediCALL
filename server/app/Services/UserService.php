@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Http\Requests\CreateUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 class UserService
 {
@@ -110,5 +111,19 @@ class UserService
                 "error" => $e
             ],500);
         }
+    }
+
+    public function popa(){
+        $user = Auth::user();
+        $receptions = $user->receptions()->with("doctor.services")->where("status", "=", "завершен")->get();
+        $canMakeReception = false;
+        foreach ($receptions as $reception) {
+            if ($reception["doctor"]["services"]["name"] == "Терапевт") {
+                $canMakeReception = true;
+            }
+        }
+        return response()->json([
+            "status"=> $canMakeReception,
+        ]);
     }
 }

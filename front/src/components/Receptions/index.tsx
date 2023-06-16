@@ -1,4 +1,4 @@
-import {FC, useEffect, useState} from "react";
+import React, {ChangeEvent, FC, SyntheticEvent, useEffect, useState} from "react";
 import styles from "./Receptions.module.scss"
 import Doctor from "../Doctor";
 import {IDoctor} from "../../api/Types/IDoctor";
@@ -7,24 +7,25 @@ import {AxiosTypes} from "../../api/axios/types";
 import DoctorReception from "../DoctorReception";
 import {DoctorReceptionType} from "../../api/Types/IReception";
 import { Form } from "react-bootstrap";
+import {ReceptionStatus} from "../../enums/ReceptionStatus";
+import {useReceptions} from "../../hooks/useReceptions";
 
-export const statuses = ["активен", "принят", "завершен", "отменен"];
+export const statuses = [ReceptionStatus.active, ReceptionStatus.accept, ReceptionStatus.complete, ReceptionStatus.cancel];
 const Doctors: FC = ()=> {
     const receptionService = new ReceptionsService(AxiosTypes.doctors)
-    const [receptions, setReceptions] = useState<DoctorReceptionType[]>([])
+    const {receptions, setReceptions} = useReceptions()
 
     function getAllReceptions(){
         receptionService.getAllReceptions().then(data => {
-            // console.log(data)
             setReceptions(data)
-            // console.log(doctors)
+            localStorage.setItem("receptions", JSON.stringify(data))
         }).catch(e=> console.log(e))
     }
     useEffect(()=> {
         getAllReceptions()
     }, [])
 
-    function changeHandler(e){
+    function changeHandler(e:any){
         if (e.target.value === "all") {
             getAllReceptions()
         } else {
@@ -48,8 +49,8 @@ const Doctors: FC = ()=> {
             </div>
             {!receptions.length ? "нет приемов с таким статусом" : ""}
             <div className={styles.wrapper}>
-                {receptions.map(reception=> {
-                    return <DoctorReception data={reception} key={reception.id} />
+                {receptions.map((reception)=> {
+                    return <DoctorReception doc={reception} key={reception.id} />
                 })}
             </div>
         </>

@@ -49,4 +49,8 @@ class ReceptionsController extends Controller
         return $this->ReceptionsService->complete($request);
     }
 
+    public function backToActive($id){
+        return $this->ReceptionsService->backToActive($id);
+    }
+
 }

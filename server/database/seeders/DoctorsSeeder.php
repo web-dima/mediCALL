@@ -20,23 +20,23 @@ class DoctorsSeeder extends Seeder
             [
                 [
                     "service_id" => 1,
-                    "fio" => "Белгородов Шэхо Кибивович",
-                    "photo" => "C0FvTP0TmmnmLeI3s8m16dVOch7MWQN8.png",
-                    "code" => "kibi",
+                    "fio" => "Семонова Виктория Викторовна",
+                    "photo" => "/uploads/img/doctors/213b10868e80ce100fd4946b46356af7.jpg",
+                    "code" => "semonova",
                     "password" => Hash::make("123"),
                 ],
                 [
                     "service_id" => 2,
-                    "fio" => "Сосов Ноль Юанович",
-                    "photo" => "C0FvTP0TmmnmLeI3s8m16dVOch7MWQN8.png",
-                    "code" => "cinga",
+                    "fio" => "Аборин Виктор Николаевич",
+                    "photo" => "/uploads/img/doctors/5e853438b56ffa2cd95c9b2d_624ce40cb3ed27.26303310.jpg",
+                    "code" => "aborin",
                     "password" => Hash::make("123"),
                 ],
-                [
+[
                     "service_id" => 3,
-                    "fio" => "Самогонов Халера Трупович",
-                    "photo" => "C0FvTP0TmmnmLeI3s8m16dVOch7MWQN8.png",
-                    "code" => "senoval",
+                    "fio" => "Жмешенко Василий Игоревич",
+                    "photo" => "/uploads/img/doctors/a7c2b7f0517e233212d6f2da94002dcc.jpg",
+                    "code" => "jmeshenko",
                     "password" => Hash::make("123"),
                 ],
             ],

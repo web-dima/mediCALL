@@ -4,22 +4,24 @@ import {ServiceService} from "../../api/Services/ServiceService";
 import {DoctorsService} from "../../api/Services/DoctorsService";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
+import {useDoctors} from "../../hooks/useDoctors";
 const RegisterDoctor: FC = ()=> {
     const nav = useNavigate()
     const doctorService = new DoctorsService()
     const [service_id, setServId] = useState("")
-    const [servList, setServList] = useState([])
     const [fio, setFio] = useState("")
     const imgRef = useRef<HTMLInputElement>(null)
     const [code, setCode] = useState("")
     const [password, setPassword] = useState("")
+    const {doctors,setDoctors, setServices, services} = useDoctors()
 
     const servService = new ServiceService();
 
     useEffect(()=>{
         servService.getServices().then((data)=>{
             console.log(data)
-            setServList(data)
+            setServices(data)
+            localStorage.setItem("services", JSON.stringify(data))
         })
     }, [])
 
@@ -27,8 +29,19 @@ const RegisterDoctor: FC = ()=> {
         e.preventDefault()
         doctorService.createDoctor({service_id,fio, img: imgRef, code, password})
             .then(data => {
-                console.log(data)
-                alert("успешно")
+                if (typeof data.data === "string") {
+                    alert(data.data)
+                } else {
+                    console.log(data.data)
+                    const doctorsArr = JSON.parse(localStorage.getItem("doctors") ?? doctors)
+                    doctorsArr.push(data.data.doctor)
+                    setDoctors(doctorsArr)
+                    console.log(doctorsArr)
+                    // console.log()
+                    localStorage.setItem("doctors", JSON.stringify(doctorsArr))
+                    alert("успешно")
+                }
+
             })
             .catch(e => {
                 console.log(e)
@@ -44,7 +57,7 @@ const RegisterDoctor: FC = ()=> {
                     <Form.Label>выберите специализацию врача</Form.Label>
                     <Form.Select defaultValue={service_id} onChange={(e)=> setServId(e.target.value)}>
                         <option value="" disabled>открыть</option>
-                        {servList.map(serv => {
+                        {services.map(serv => {
                             return <option value={serv.id} key={serv.id}>{serv.name}</option>
                         })}
                     </Form.Select>

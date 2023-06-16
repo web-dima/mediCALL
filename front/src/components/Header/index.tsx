@@ -28,12 +28,13 @@ const Header: FC = ()=> {
                 const doctor = data.code ? <Link to="/doctor">Врачебная панель</Link> : null
                 // console.log(doctor)
                 // console.log(data)
+                const disableProfile = admin || doctor
                 const userLinks = (
                     <>
                         <Link to="/">Главная</Link>
                         {admin}
                         {doctor}
-                        <Link to="/profile">Профиль</Link>
+                        {!disableProfile ? <Link to="/profile">Профиль</Link> : null}
                         <a href="/sosiEsLint" onClick={(e) => {
                             e.preventDefault()
                             userService.logout()

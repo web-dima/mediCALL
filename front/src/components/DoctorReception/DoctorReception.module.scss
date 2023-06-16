@@ -27,8 +27,7 @@
 }
 
 .reception2 {
-  flex: 21%;
-  font-size: 20px;
+  flex-grow: 1;
   display: -webkit-box;
   -webkit-line-clamp: 6;
   -webkit-box-orient: vertical;

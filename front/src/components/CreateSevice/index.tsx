@@ -5,6 +5,7 @@ import {ServiceService} from "../../api/Services/ServiceService";
 import {useNavigate} from "react-router-dom";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
+import {useDoctors} from "../../hooks/useDoctors";
 
 const CreateService: FC = ()=> {
     const serviceService = new ServiceService()
@@ -12,14 +13,24 @@ const CreateService: FC = ()=> {
     const [name, setName] = useState("")
     const [afterGP, setAfterGP] = useState("")
     const imgRef = useRef<HTMLInputElement>(null)
+    const {setServices, services} = useDoctors()
 
     function submitHandler(e) {
         console.log(afterGP)
         e.preventDefault()
         serviceService.createService({name,afterGP, img: imgRef})
             .then(data => {
-                alert(data)
-                nav("/admin")
+                if (data.success) {
+                    alert(data.success)
+                    const servicesArr = JSON.parse(localStorage.getItem("services") ?? JSON.stringify(services))
+                    servicesArr.push(data.data)
+                    setServices(servicesArr)
+                    console.log(servicesArr)
+                    // console.log()
+                    localStorage.setItem("services", JSON.stringify(services))
+                    // nav("/admin")
+                }
+
             })
             .catch(e => {
                 // alert("КВЕРИ ФЕЙЛД")

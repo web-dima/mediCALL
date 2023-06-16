@@ -2,8 +2,10 @@ import axios, {AxiosInstance} from "axios";
 import {AxiosTypes} from "./types";
 
 export class Axios {
-    // private readonly  BASE_URL = "http://cz55344.tw1.ru/server/api/"
-    private readonly  BASE_URL = "http://127.0.0.1:8000/api/"
+    private readonly  BASE_URL = "http://cz55344.tw1.ru/server/api/"
+    private readonly  IMG_URL = "http://cz55344.tw1.ru/server"
+    // private readonly  BASE_URL = "http://127.0.0.1:8000/api/"
+    // private readonly  IMG_URL = "http://127.0.0.1:8000"
     // private readonly ax: AxiosInstance
     private readonly axiosType: AxiosTypes
 
@@ -31,5 +33,9 @@ export class Axios {
 
     get getAxios() {
         return this.ax
+    }
+
+    get getImgUrl() {
+        return this.IMG_URL
     }
 }

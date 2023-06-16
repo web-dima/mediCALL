@@ -25,7 +25,11 @@ class ReceptionsService
             ]);
         }
 
-        return Receptions::with(["user", "doctor.services"])->where("user_id", $user["id"])->get();
+        return Receptions::with(["user", "doctor.services"])
+            ->where("status","<>", "отменен")
+//            ->where("status","<>", "завершен")
+            ->where("user_id", $user["id"])
+            ->get();
     }
 
     public function getOne($id){
@@ -33,121 +37,58 @@ class ReceptionsService
     }
 
     public function create(CreateReceptionRequest $request){
-         try {
-            $user = Auth::user();
-            if (!$user) {
-                return response()->json([
-                    'success' => false,
-                    "data"=> "только клиент может создавать заявку"
-                ]);
-            }
-
-            $receptions = Receptions::create([
-                'user_id' => $user["id"],
-                'doctor_id' => $request["doctor_id"],
-                'date' =>$request["date"]
-            ]);
+        $user = Auth::user();
+        if (!$user) {
             return response()->json([
-                'success' => true,
-                "data"=> $receptions
+                'success' => false,
+                "data"=> "только клиент может создавать заявку"
             ]);
-        } catch (\Exception $e) {
-
-            return response()->json([
-                "success"=> false,
-                'data' => $e
-            ],500);
         }
+        $userHaveSameReception = $user->receptions()
+            ->where("date", "=", $request["date"])
+            ->where("doctor_id", "=", $request["doctor_id"])
+            ->where("status", "<>", "завершен")
+            ->first();
+//        return $userHaveSameReception;
+        if ($userHaveSameReception) {
+            return response()->json([
+                'success' => false,
+                "data"=> "вы не можете записаться к одному врачу 2 раза в одну дату, можно записаться либо в другую дату, либо после завершения приема"
+            ]);
+        }
+        $receptions = Receptions::create([
+            'user_id' => $user["id"],
+            'doctor_id' => $request["doctor_id"],
+            'date' =>$request["date"]
+        ]);
+        return response()->json([
+            'success' => true,
+            "data"=> $receptions
+        ]);
     }
 
     private function changeStatus($status, $id) {
-        if ($status === "принят") {
+        $recep = Receptions::findOrFail($id);
+        $recep->status = $status;
+        if ($recep->save()) {
+            return response()->json([
+                "success"=> true,
+                'data' => $status
+            ]);
+        } else {
             return response()->json([
                 "success"=> false,
-                'data' => "нельзя выписать статус 'принят', повторно"
-            ],400);
-        } else {
-            $recep = Receptions::findOrFail($id);
-            $recep->status = $status;
-            if ($recep->save()) {
-                return response()->json([
-                    "success"=> true,
-                    'data' => "успешно выписан статус '$status'"
-                ]);
-            } else {
-                return response()->json([
-                    "success"=> false,
-                    'data' => "ошибка при выписывании статуса '$status'"
-                ]);
-            }
+                'data' => $status
+            ]);
         }
     }
 
     public function changeStatusReq(ChangeReceptionStatusRequest $request){
         return $this->changeStatus($request["status"], $request["id"]);
-        //        switch ($status) {
-//            case "принят" : {
-//                return response()->json([
-//                    "success"=> false,
-//                    'data' => "нельзя выписать статус 'принят', повторно"
-//                ],400);
-//            }
-//            case "активен" : {
-//                $recep = Receptions::findOrFail($request["id"]);
-//                $recep->status = $status;
-//                if ($recep->save()) {
-//                    return response()->json([
-//                        "success"=> true,
-//                        'data' => "успешно выписан статус $status"
-//                    ]);
-//                } else {
-//                    return response()->json([
-//                        "success"=> false,
-//                        'data' => "ошибка при выписывании статуса $status"
-//                    ]);
-//                }
-//            }
-//            case "завершен" : {
-//                $reception = Receptions::findOrFail($request["id"]);
-//                $reception->status = $status;
-//                if ($reception->save()) {
-//                    return response()->json([
-//                        "success"=> true,
-//                        'data' => "успешно выписан статус $status"
-//                    ]);
-//                } else {
-//                    return response()->json([
-//                        "success"=> false,
-//                        'data' => "ошибка при выписывании статуса $status"
-//                    ]);
-//                }
-//            }
-//            case "отменен" : {
-//                $receptionnm = Receptions::findOrFail($request["id"]);
-//                $receptionnm->status = $status;
-//                if ($receptionnm->save()) {
-//                    return response()->json([
-//                        "success"=> true,
-//                        'data' => "успешно выписан статус $status"
-//                    ]);
-//                } else {
-//                    return response()->json([
-//                        "success"=> false,
-//                        'data' => "ошибка при выписывании статуса $status"
-//                    ]);
-//                }
-//            }
-//            default : {
-//                return response()->json([
-//                    "success"=> false,
-//                    'data' => "невозможно выписать такой статус"
-//                ],400);
-//            }
-//        }
     }
 
     public function accept($id) {
-        return $this->changeStatus("активен", $id);
+        return $this->changeStatus("принят", $id);
     }
 
     public function cancel($id) {
@@ -162,7 +103,10 @@ class ReceptionsService
 
         return response()->json([
             "success"=> true,
-            'data' => ""
+            'data' => [
+                "status"=> "завершен",
+                "result"=>$reception->result
+            ]
         ]);
     }
 
@@ -179,7 +123,7 @@ class ReceptionsService
             Receptions::destroy($id);
             return response()->json([
                 "success"=> true,
-                "data"=> "прием успешно удален"
+                "data"=> $id
             ]);
         } catch (\Exception $e) {
 
@@ -189,6 +133,10 @@ class ReceptionsService
                 "error" => $e
             ],500);
         }
+    }
+
+    public function backToActive($id){
+        return $this->changeStatus("активен", $id);
     }
 
 }

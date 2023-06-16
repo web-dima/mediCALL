@@ -12,11 +12,9 @@ interface DoctorProps {
 
 const Doctor: FC<DoctorProps> = ({data, fromProfile})=> {
     const respServ = new ReceptionsService()
-
     const nav = useNavigate()
 
     const [dateInput, setDateInput] = useState("")
-    const [image, setImage] = useState("")
 
     function clickHandler(e: React.MouseEvent) {
         e.preventDefault()
@@ -27,20 +25,33 @@ const Doctor: FC<DoctorProps> = ({data, fromProfile})=> {
             alert("нельзя выбрать дату которая прошла")
             return
         }
+        respServ.checkCanUserMakeReception(data.services.name, data.services.after_GP).then((data)=>{
 
-        respServ.createReceptions({date: dateInput, doctorId: Number(e.target.dataset.id)}).then((data)=>{
-            if (data.success) {
-                nav("/profile")
+            if (data.status) {
+                respServ.createReceptions({date: dateInput, doctorId: Number(e.target.dataset.id)}).then((data)=>{
+                    if (data.success) {
+                        nav("/profile")
+                    } else {
+                        alert(data.data)
+                    }
+                }).catch(e => {
+                    alert(e.response.data.status)
+                    nav("/login")
+                })
+            } else {
+                alert("вы не можете записаться к врачу пока у вас не будет завершенного приема у терапевта")
             }
-        }).catch(e => {
-            alert(e.response.data.status)
-            nav("/login")
+
         })
+
     }
-    
+
+    // console.log(data.photo)
+    // console.log(respServ.getImgUrl)
+    // console.log(respServ.getImgUrl + data.photo)
     return(
         <div key={data.id} className={styles.doctor}>
-            <div className={styles.img}><img src={data.photo} alt="" onError={(e) => e.target.src = "/img/doc.jpg"}/></div>
+            <div className={styles.img}><img src={respServ.getImgUrl + data.photo} alt="" onError={(e) => e.target.src = "/img/doc.jpg"}/></div>
             <div className={styles.fio}>ФИО - {data.fio}</div>
             <div className={styles.service}>Сервис - {data.services.name}</div>
             {!fromProfile &&

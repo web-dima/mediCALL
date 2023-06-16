@@ -29,6 +29,6 @@ export class ServiceService extends Service{
                 "Content-Type": "multipart/form-data"
             }
         })
-        return resp.data.success ? "good" : "sos"
+        return resp.data
     }
 }

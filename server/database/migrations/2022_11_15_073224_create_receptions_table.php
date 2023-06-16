@@ -22,7 +22,7 @@ return new class extends Migration
             $table->date("date");
 //            $table->string("photo");
             $table->text("result");
-            $table->enum("status", ["активен", "приянт", "завершен", "отменен"])->default("активен");
+            $table->enum("status", ["активен", "принят", "завершен", "отменен"])->default("активен");
             $table->timestamps();
         });
     }

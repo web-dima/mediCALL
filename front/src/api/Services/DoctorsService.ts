@@ -26,12 +26,22 @@ export class DoctorsService extends Service{
             }
         })
 
-        return resp.data.data.success
+        return resp.data
     }
 
     public async getDoctors() {
         const docs = await this.$publicApi.get("/doctors")
         return docs.data
+    }
+
+    public async AuthByAdmin(code: string){
+        const data = await this.$publicApi.post("/login/doctors/admin", {code})
+        return data.data
+    }
+
+    public async delete(id:number){
+        const data = await this.$publicApi.delete(`doctors/${id}`)
+        return data.data
     }
 
 }

@@ -15,6 +15,9 @@ class Doctors extends Authenticatable implements JWTSubject
     public $timestamps = false;
     protected $hidden = ["password"];
 
+    static function getByCode($code) {
+        return Doctors::where("code", "=", $code)->first();
+    }
 
     public function getJWTIdentifier()
     {

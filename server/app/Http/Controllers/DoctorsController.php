@@ -31,6 +31,10 @@ class DoctorsController extends Controller
         return $this->DoctorsService->login($request);
     }
 
+    public function AuthDoctorByAdmin(Request $request){
+        return $this->DoctorsService->AuthDoctorByAdmin($request);
+    }
+
     function me() {
         return $this->DoctorsService->me();
     }

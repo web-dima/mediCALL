@@ -7,6 +7,7 @@ use App\Http\Requests\LoginDoctorRequest;
 use App\Models\Doctors;
 use App\Models\Services;
 use App\Http\Requests\DoctorCreateRequest;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -39,6 +40,16 @@ class DoctorsService
         ]);
     }
 
+    public function AuthDoctorByAdmin(Request $request){
+        $user = Doctors::getByCode($request->code);
+        return response()->json([
+            "success" => true,
+            "data"=> [
+                "doctor" => $user,
+                "token"=> auth()->guard("doctors")->login($user),
+            ]
+        ]);
+    }
     function me() {
         $doc = Auth::guard("doctors")->user();
         if (!$doc) return response()->json(['status' => 'ошибочный токен'], 401);
@@ -63,11 +74,12 @@ class DoctorsService
                 "code" => $request->input("code"),
                 "password" => Hash::make($request->input("password")),
             ]);
+//            return $doctor->with("services")->orderByDesc("id")->first();
             $token = Auth::guard("doctors")->login($doctor);
             return response()->json([
                 "success" => true,
                 "data" =>[
-                    "doctor" => $doctor,
+                    "doctor" => $doctor->with("services")->orderByDesc("id")->first(),
                     "token"=> [
                         'access_token' => $token,
                         'token_type' => 'bearer',
@@ -135,7 +147,7 @@ class DoctorsService
             Doctors::destroy($id);
             return response()->json([
                 "success"=> true,
-                "data"=> "доктор успешно удален"
+                "data"=> $doctor->id
             ]);
         } catch (\Exception $e) {
 
